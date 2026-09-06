@@ -1,0 +1,12 @@
+package com.orvion.domain.user;
+
+public enum RoleEnum {
+    ROLE_SUPER_ADMIN,
+    ROLE_BUSINESS_ADMIN,
+    ROLE_SALES_MANAGER,
+    ROLE_INVENTORY_MANAGER,
+    ROLE_PRODUCTION_MANAGER,
+    ROLE_ACCOUNTANT,
+    ROLE_DELIVERY_MANAGER,
+    ROLE_EMPLOYEE
+}

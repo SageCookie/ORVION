@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: ORVION Business Operations Platform
+  profiles:
+    active: h2
+  main:
+    allow-bean-definition-overriding: true
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+orvion:
+  jwt:
+    secret: 404D635166546A576E5A7234753778214125442A472D4B6150645267556B5870
+    expiration-ms: 86400000 # 24 Hours
+  cors:
+    allowed-origins: "*"
+    allowed-methods: "*"
+    allowed-headers: "*"
+  storage:
+    upload-dir: ./uploads
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
