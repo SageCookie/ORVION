@@ -1,0 +1,93 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: ${DB_NAME:-orvion_db}
+      POSTGRES_USER: ${DB_USERNAME:-orvion_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-orvion_secure_password_123}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - orvion_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-orvion_user} -d ${DB_NAME:-orvion_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  ml-service:
+    build:
+      context: ./ml-service
+    ports:
+      - "8000:8000"
+    environment:
+      LEAD_TIME_DAYS: ${LEAD_TIME_DAYS:-7}
+      SERVICE_Z: ${SERVICE_Z:-1.65}
+      MLFLOW_TRACKING_URI: file:/app/mlruns
+    volumes:
+      - orvion_mlruns:/app/mlruns
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: postgres
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-orvion_db}
+      DB_USERNAME: ${DB_USERNAME:-orvion_user}
+      DB_PASSWORD: ${DB_PASSWORD:-orvion_secure_password_123}
+      JWT_SECRET: ${JWT_SECRET:-404D635166546A576E5A7234753778214125442A472D4B6150645267556B5870}
+      JWT_EXPIRATION_MS: ${JWT_EXPIRATION_MS:-86400000}
+      ORVION_ML_BASE_URL: http://ml-service:8000
+      STORAGE_LOCATION: /app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ml-service:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "python", "-c", "print('skip')"]
+      disable: true
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+  prometheus:
+    image: prom/prometheus:v2.55.1
+    profiles: ["observability"]
+    volumes:
+      - ./observability/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    depends_on:
+      - backend
+
+  grafana:
+    image: grafana/grafana:11.3.0
+    profiles: ["observability"]
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./observability/grafana/provisioning:/etc/grafana/provisioning:ro
+    depends_on:
+      - prometheus
+
+volumes:
+  orvion_pgdata:
+  orvion_mlruns:
