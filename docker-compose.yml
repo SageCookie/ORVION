@@ -15,23 +15,6 @@ services:
       timeout: 5s
       retries: 10
 
-  ml-service:
-    build:
-      context: ./ml-service
-    ports:
-      - "8000:8000"
-    environment:
-      LEAD_TIME_DAYS: ${LEAD_TIME_DAYS:-7}
-      SERVICE_Z: ${SERVICE_Z:-1.65}
-      MLFLOW_TRACKING_URI: file:/app/mlruns
-    volumes:
-      - orvion_mlruns:/app/mlruns
-    healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
-      interval: 10s
-      timeout: 5s
-      retries: 12
-
   backend:
     build:
       context: ./backend
@@ -46,16 +29,19 @@ services:
       DB_PASSWORD: ${DB_PASSWORD:-orvion_secure_password_123}
       JWT_SECRET: ${JWT_SECRET:-404D635166546A576E5A7234753778214125442A472D4B6150645267556B5870}
       JWT_EXPIRATION_MS: ${JWT_EXPIRATION_MS:-86400000}
-      ORVION_ML_BASE_URL: http://ml-service:8000
+      ORVION_ML_BASE_URL: ${ORVION_ML_BASE_URL:-http://ml-service:8000}
       STORAGE_LOCATION: /app/uploads
+    volumes:
+      - orvion_uploads:/app/uploads
     depends_on:
       postgres:
         condition: service_healthy
-      ml-service:
-        condition: service_started
     healthcheck:
-      test: ["CMD", "python", "-c", "print('skip')"]
-      disable: true
+      test: ["CMD-SHELL", "curl -sf http://localhost:8080/actuator/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
 
   frontend:
     build:
@@ -90,4 +76,4 @@ services:
 
 volumes:
   orvion_pgdata:
-  orvion_mlruns:
+  orvion_uploads:

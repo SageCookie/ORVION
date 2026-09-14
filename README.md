@@ -106,35 +106,46 @@ Open `http://localhost:5173`. Vite proxies `/api` requests to the backend at `ht
 
 The H2 console uses the development defaults configured by the active profile: username `sa` and a blank password.
 
-## Docker Compose
+## Quick Start (Docker)
 
-The Compose file starts PostgreSQL, the Spring Boot backend, and the Nginx-served frontend:
+**Zero configuration required.** Just clone and run:
 
-```powershell
+```bash
+git clone <repository-url>
+cd orvion
 docker compose up --build
 ```
 
-URLs and ports:
+Everything starts with sensible defaults:
 
 | Service | Address |
 | --- | --- |
-| Frontend | `http://localhost:5173` |
+| Frontend (React + Nginx) | `http://localhost:5173` |
 | Backend API | `http://localhost:8080` |
 | PostgreSQL | `localhost:5432` |
+| Swagger UI | `http://localhost:8080/swagger-ui.html` |
 
-Prometheus and Grafana are behind the `observability` profile:
+The backend seeds demo accounts (see [Demo Accounts](#demo-accounts) below) on first startup. Uploaded files and database data persist in Docker volumes across restarts.
 
-```powershell
+To include **Prometheus** and **Grafana** for observability:
+
+```bash
 docker compose --profile observability up --build
 ```
 
 They are available at `http://localhost:9090` and `http://localhost:3000`. The default Grafana development password is `admin`.
 
-> **Current repository limitation:** `docker-compose.yml` references a `./ml-service` build context, but that directory is not present in this repository. As checked in, the Compose build will therefore fail until that service is supplied or removed from the Compose file. The backend's ML URL settings are configurable through `ORVION_ML_BASE_URL` and `ORVION_ML_TIMEOUT_MS`.
+> **Optional ML service:** The backend references `ORVION_ML_BASE_URL` (defaults to `http://ml-service:8000`), but no ML service is included in this repository. The application runs fine without it — ML endpoints will return errors if called, but core features work normally.
 
 ## Configuration
 
-Copy `.env.example` to `.env` when using Docker and change the development values as needed. Supported variables include:
+The defaults in `docker-compose.yml` work out-of-the-box — no `.env` file is required. To customize values, copy `.env.example` to `.env` and edit:
+
+```bash
+cp .env.example .env
+```
+
+Supported variables:
 
 | Variable | Purpose | Default |
 | --- | --- | --- |
