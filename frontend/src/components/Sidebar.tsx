@@ -46,27 +46,27 @@ export default function Sidebar() {
 
   return (
     <aside
-      className="fixed inset-y-0 left-0 z-40 flex flex-col backdrop-blur-3xl bg-white/[0.04] border-r border-white/20 shadow-[0_10px_40px_rgba(0,0,0,0.3)] text-white select-none"
+      className="fixed inset-y-0 left-0 z-40 flex flex-col backdrop-blur-lg bg-white/85 border-r border-slate-200/80 shadow-[0_10px_40px_rgba(15,23,42,0.04)] text-slate-800 select-none transform-gpu"
       style={{ width: 'var(--sidebar-width)' }}
     >
       {/* Brand Header with New Official Logo (Matching reference image top left logo) */}
-      <div className="flex items-center gap-3.5 px-6 py-6 border-b border-white/10">
-        <div className="w-10 h-10 rounded-2xl overflow-hidden bg-white/[0.08] p-1.5 border border-white/25 flex items-center justify-center shadow-[0_0_20px_rgba(56,189,248,0.35)]">
+      <div className="flex items-center gap-3.5 px-6 py-6 border-b border-slate-200/80">
+        <div className="w-10 h-10 rounded-2xl overflow-hidden bg-white p-1.5 border border-slate-200/90 flex items-center justify-center shadow-sm">
           <img src="/orvion-logo.png" alt="ORVION Logo" className="w-full h-full object-contain" />
         </div>
         <div className="flex-1 min-w-0">
-          <div className="font-black text-lg tracking-wider text-white flex items-center gap-1.5">
+          <div className="font-black text-lg tracking-wider text-slate-900 flex items-center gap-1.5">
             ORVION
-            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-cyan-400/20 text-cyan-300 border border-cyan-400/40 shadow-[0_0_10px_rgba(56,189,248,0.3)]">
+            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-sky-100 text-sky-700 border border-sky-300">
               PRO
             </span>
           </div>
-          <div className="text-[10px] text-slate-300 truncate">Intelligent Operations</div>
+          <div className="text-[10px] text-slate-500 truncate font-medium">Intelligent Operations</div>
         </div>
       </div>
 
       {/* Navigation List */}
-      <nav className="flex-1 overflow-y-auto py-5 px-3.5 space-y-1.5 scrollbar-thin scrollbar-thumb-white/15">
+      <nav className="flex-1 overflow-y-auto py-5 px-3.5 space-y-1.5 scrollbar-thin scrollbar-thumb-slate-300">
         <div className="px-2 pb-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">
           Navigation
         </div>
@@ -77,8 +77,8 @@ export default function Sidebar() {
             className={({ isActive }) =>
               `flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 group ${
                 isActive
-                  ? 'bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 text-white shadow-[0_0_25px_rgba(6,182,212,0.45)] border border-white/30 scale-[1.02]'
-                  : 'text-slate-300 hover:bg-white/[0.08] hover:text-white border border-transparent'
+                  ? 'bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 text-white shadow-[0_4px_16px_rgba(2,132,199,0.3)] border border-sky-400/40 scale-[1.02]'
+                  : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-transparent'
               }`
             }
           >
@@ -89,16 +89,16 @@ export default function Sidebar() {
       </nav>
 
       {/* User Capsule Footer (Exact design from the reference image bottom left: "Ava Chen • Status") */}
-      <div className="p-4 border-t border-white/10">
-        <div className="p-2.5 rounded-2xl bg-white/[0.06] hover:bg-white/[0.1] border border-white/20 transition-all mb-2 flex items-center justify-between">
+      <div className="p-4 border-t border-slate-200/80">
+        <div className="p-2.5 rounded-2xl bg-white/90 hover:bg-white border border-slate-200/90 shadow-sm transition-all mb-2 flex items-center justify-between">
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-cyan-400 to-fuchsia-500 flex items-center justify-center text-white text-xs font-bold shadow-md shrink-0">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white text-xs font-bold shadow-sm shrink-0">
               {user?.firstName?.[0] || 'U'}
             </div>
             <div className="min-w-0">
-              <div className="text-xs font-bold text-white truncate">{user?.firstName || 'User'} {user?.lastName || ''}</div>
-              <div className="text-[10px] text-emerald-400 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <div className="text-xs font-bold text-slate-900 truncate">{user?.firstName || 'User'} {user?.lastName || ''}</div>
+              <div className="text-[10px] text-emerald-600 font-semibold flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 <span className="truncate">Active • {user?.role?.replace('ROLE_', '')}</span>
               </div>
             </div>
@@ -106,7 +106,7 @@ export default function Sidebar() {
           <button
             onClick={handleLogout}
             title="Sign Out"
-            className="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-rose-500/15 rounded-lg transition-colors"
+            className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
           >
             <LogOut className="w-3.5 h-3.5" />
           </button>

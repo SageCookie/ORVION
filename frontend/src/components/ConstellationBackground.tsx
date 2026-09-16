@@ -19,18 +19,18 @@ export default function ConstellationBackground() {
     };
     window.addEventListener('resize', handleResize);
 
-    // Connected geometric constellation nodes (matching reference image)
-    const nodeCount = 55;
+    // Connected geometric constellation nodes (matching architectural light theme)
+    const nodeCount = 50;
     const nodes = Array.from({ length: nodeCount }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.35,
-      vy: (Math.random() - 0.5) * 0.35,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
       radius: Math.random() * 2 + 1,
-      color: Math.random() > 0.6 ? 'rgba(56, 189, 248, ' : 'rgba(168, 85, 247, ',
+      color: Math.random() > 0.5 ? 'rgba(14, 165, 233, ' : 'rgba(99, 102, 241, ',
     }));
 
-    const maxDist = 140;
+    const maxDist = 135;
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
@@ -43,18 +43,18 @@ export default function ConstellationBackground() {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < maxDist) {
-            const alpha = (1 - dist / maxDist) * 0.22;
+            const alpha = (1 - dist / maxDist) * 0.18;
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
-            ctx.strokeStyle = `rgba(147, 197, 253, ${alpha})`;
+            ctx.strokeStyle = `rgba(99, 102, 241, ${alpha})`;
             ctx.lineWidth = 0.8;
             ctx.stroke();
           }
         }
       }
 
-      // Draw glowing nodes
+      // Draw glowing nodes (dual-arc halo instead of costly shadowBlur)
       nodes.forEach((node) => {
         node.x += node.vx;
         node.y += node.vy;
@@ -62,13 +62,17 @@ export default function ConstellationBackground() {
         if (node.x < 0 || node.x > width) node.vx *= -1;
         if (node.y < 0 || node.y > height) node.vy *= -1;
 
+        // Soft outer halo
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, node.radius * 2.2, 0, Math.PI * 2);
+        ctx.fillStyle = `${node.color}0.12)`;
+        ctx.fill();
+
+        // Bright inner core
         ctx.beginPath();
         ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `${node.color}0.7)`;
-        ctx.shadowColor = 'rgba(56, 189, 248, 0.8)';
-        ctx.shadowBlur = 6;
+        ctx.fillStyle = `${node.color}0.75)`;
         ctx.fill();
-        ctx.shadowBlur = 0;
       });
 
       animationFrameId = requestAnimationFrame(render);
@@ -83,15 +87,15 @@ export default function ConstellationBackground() {
   }, []);
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-gradient-to-br from-[#080a18] via-[#0d1127] to-[#0a0c1e]">
-      {/* Dynamic Luminous Ambient Blooms (matching the exact cyan/magenta/coral lighting in the reference image) */}
-      <div className="absolute top-1/4 left-1/5 w-[650px] h-[500px] bg-gradient-to-r from-cyan-500/25 to-blue-600/20 rounded-full blur-[130px]" />
-      <div className="absolute top-1/3 right-1/4 w-[600px] h-[550px] bg-gradient-to-br from-fuchsia-500/25 via-purple-600/25 to-indigo-600/20 rounded-full blur-[140px]" />
-      <div className="absolute bottom-10 left-1/3 w-[550px] h-[450px] bg-gradient-to-tr from-pink-500/20 via-rose-500/15 to-amber-500/15 rounded-full blur-[130px]" />
-      <div className="absolute -top-20 right-10 w-[450px] h-[400px] bg-indigo-500/20 rounded-full blur-[110px]" />
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-gradient-to-br from-[#eef2f6] via-[#f0f4f9] to-[#e8edf5]">
+      {/* Dynamic Ambient Pastel Light Blooms for rich depth on light backdrop - GPU accelerated */}
+      <div className="absolute top-1/4 left-1/5 w-[650px] h-[500px] bg-gradient-to-r from-sky-400/12 to-indigo-500/10 rounded-full blur-[120px] transform-gpu will-change-transform" />
+      <div className="absolute top-1/3 right-1/4 w-[600px] h-[550px] bg-gradient-to-br from-purple-400/12 via-indigo-400/10 to-blue-400/10 rounded-full blur-[120px] transform-gpu will-change-transform" />
+      <div className="absolute bottom-10 left-1/3 w-[550px] h-[450px] bg-gradient-to-tr from-rose-300/10 via-amber-300/8 to-sky-300/10 rounded-full blur-[120px] transform-gpu will-change-transform" />
+      <div className="absolute -top-20 right-10 w-[450px] h-[400px] bg-indigo-300/10 rounded-full blur-[100px] transform-gpu will-change-transform" />
 
       {/* Interactive Constellation Geometric Canvas */}
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-60" />
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-50" />
     </div>
   );
 }
