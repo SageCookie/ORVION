@@ -16,6 +16,7 @@ desktop.ini
 .env
 .env.local
 .env.*.local
+!.env.example
 *.pem
 *.key
 
@@ -41,7 +42,7 @@ backend/target/
 *.tar.gz
 *.rar
 
-# Maven local repository / wrapper jar (optional)
+# Maven local repository / wrapper jar (allow wrapper)
 !backend/.mvn/wrapper/maven-wrapper.jar
 !backend/.mvn/wrapper/maven-wrapper.properties
 
@@ -52,6 +53,10 @@ replay_pid*
 # H2 database file storage
 *.mv.db
 *.trace.db
+
+# Uploaded files
+uploads/
+backend/uploads/
 
 # ==============================================================================
 # Frontend (Node.js / React / Vite)
@@ -70,6 +75,11 @@ frontend/build/
 .eslintcache
 
 # ==============================================================================
+# Docker
+# ==============================================================================
+docker-compose.override.yml
+
+# ==============================================================================
 # IDEs and Editors
 # ==============================================================================
 .idea/
@@ -86,6 +96,9 @@ frontend/build/
 .settings/
 *.sublime-workspace
 *.sublime-project
+
+# Claude Code
+.claude/
 
 # Temporary / Scratch directories
 scratch/

@@ -1,4 +1,13 @@
 node_modules
 dist
+build
 .git
+.gitignore
 *.md
+.idea
+.vscode
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.*

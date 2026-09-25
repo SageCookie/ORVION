@@ -1,5 +1,13 @@
 target
 .git
+.gitignore
 *.md
 .idea
 *.iml
+.vscode
+.DS_Store
+Thumbs.db
+*.log
+uploads
+.env
+.env.*

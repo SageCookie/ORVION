@@ -9,7 +9,7 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
-# Avoid ignoring Maven wrapper jar file (.jar add to git)
+# Avoid ignoring Maven wrapper jar file
 !/.mvn/wrapper/maven-wrapper.jar
 
 # Eclipse
@@ -17,7 +17,7 @@ buildNumber.properties
 .project
 .settings/
 
-# Intellij
+# IntelliJ
 .idea/
 *.iml
 *.iws
@@ -30,11 +30,22 @@ dist/
 nbdist/
 .nb-gradle/
 
+# VS Code
+.vscode/
+
 # OS
 .DS_Store
 Thumbs.db
+desktop.ini
 
 # Logs & Database
 *.log
 *.mv.db
 *.trace.db
+
+# Uploaded files
+uploads/
+
+# Environment files
+.env
+.env.local
