@@ -1,113 +1,117 @@
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+}
+
 @layer base {
   :root {
     --sidebar-width: 270px;
   }
 
   body {
-    @apply bg-[#080a18] text-slate-100 antialiased selection:bg-cyan-500 selection:text-white;
+    @apply bg-[#f0f3f8] text-slate-800 antialiased selection:bg-cyan-500 selection:text-white;
     font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
   }
 
   * {
-    @apply border-white/15;
+    @apply border-slate-200/80;
   }
 }
 
 @layer components {
   /* Luminous Glassmorphism Buttons */
   .btn-primary {
-    @apply inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 text-white text-xs font-bold rounded-xl
-           hover:from-cyan-400 hover:via-blue-400 hover:to-indigo-500 active:scale-95 transition-all duration-200 shadow-lg shadow-cyan-500/25
-           border border-white/30 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 text-white text-xs font-bold rounded-xl
+           hover:from-blue-500 hover:via-indigo-500 hover:to-cyan-500 active:scale-95 transition-all duration-200 shadow-md shadow-indigo-500/20
+           border border-indigo-400/30 disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center gap-2 px-4 py-2 bg-white/[0.08] hover:bg-white/[0.15] text-white text-xs font-semibold rounded-xl
-           border border-white/20 active:scale-95 transition-all duration-200 backdrop-blur-xl shadow-sm;
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-white/80 hover:bg-white text-slate-700 text-xs font-semibold rounded-xl
+           border border-slate-200/90 active:scale-95 transition-all duration-200 backdrop-blur-md shadow-sm hover:shadow-md;
   }
 
   .btn-danger {
-    @apply inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-rose-500 to-red-600 text-white text-xs font-semibold rounded-xl
-           hover:from-rose-400 hover:to-red-500 active:scale-95 transition-all duration-200 shadow-lg shadow-rose-500/25 border border-rose-300/30;
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-rose-600 to-red-600 text-white text-xs font-semibold rounded-xl
+           hover:from-rose-500 hover:to-red-500 active:scale-95 transition-all duration-200 shadow-md shadow-rose-500/20 border border-rose-300/30;
   }
 
-  /* Translucent Acrylic Glass Panels (Matching Reference Image) */
+  /* Frosted Glass Panels in Light Architecture (Optimized for 60fps scrolling) */
   .card {
-    @apply bg-white/[0.06] backdrop-blur-2xl rounded-2xl border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.25)]
-           hover:border-white/35 hover:bg-white/[0.08] transition-all duration-300;
+    @apply bg-white/80 backdrop-blur-md rounded-2xl border border-slate-200/80 shadow-[0_8px_30px_rgba(15,23,42,0.05)]
+           hover:border-slate-300/90 hover:shadow-[0_12px_36px_rgba(15,23,42,0.08)] transition-all duration-200 text-slate-800 transform-gpu;
   }
 
   .glass-panel {
-    @apply bg-white/[0.05] backdrop-blur-3xl rounded-3xl border border-white/20 shadow-[0_12px_40px_rgba(0,0,0,0.3),_inset_0_1px_1px_rgba(255,255,255,0.2)];
+    @apply bg-white/80 backdrop-blur-md rounded-3xl border border-slate-200/80 shadow-[0_12px_40px_rgba(15,23,42,0.06),_inset_0_1px_1px_rgba(255,255,255,0.8)] text-slate-800 transform-gpu;
   }
 
   .glass-card {
-    @apply bg-white/[0.06] backdrop-blur-2xl border border-white/20 rounded-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.25)]
-           hover:border-white/35 hover:bg-white/[0.08] transition-all duration-300;
+    @apply bg-white/85 backdrop-blur-md border border-slate-200/80 rounded-2xl shadow-[0_8px_30px_rgba(15,23,42,0.05)]
+           hover:border-slate-300/90 hover:bg-white/95 transition-all duration-200 text-slate-800 transform-gpu;
   }
 
   .glass-card-glow {
-    @apply relative overflow-hidden bg-gradient-to-b from-white/[0.09] to-white/[0.04] backdrop-blur-2xl border border-white/20
-           rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.25)] hover:shadow-[0_16px_50px_rgba(56,189,248,0.2)]
-           hover:border-cyan-400/40 transition-all duration-300;
+    @apply relative overflow-hidden bg-gradient-to-b from-white/90 to-white/75 backdrop-blur-md border border-slate-200/90
+           rounded-2xl shadow-[0_12px_35px_rgba(15,23,42,0.06)] hover:shadow-[0_16px_45px_rgba(56,189,248,0.15)]
+           hover:border-cyan-400/50 transition-all duration-200 text-slate-800 transform-gpu;
   }
 
   .glass-modal {
-    @apply bg-slate-900/80 backdrop-blur-3xl border border-white/25 rounded-3xl shadow-[0_25px_80px_rgba(0,0,0,0.6)];
+    @apply bg-white/95 backdrop-blur-lg border border-slate-200 rounded-3xl shadow-[0_25px_80px_rgba(15,23,42,0.18)] text-slate-800;
   }
 
   /* Glass Form Inputs */
   .input {
-    @apply w-full px-3.5 py-2.5 text-sm bg-white/[0.06] hover:bg-white/[0.1] border border-white/20 rounded-xl text-white placeholder-slate-400
-           focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/60 backdrop-blur-xl transition-all;
+    @apply w-full px-3.5 py-2.5 text-sm bg-white/90 hover:bg-white border border-slate-200/90 rounded-xl text-slate-900 placeholder-slate-400
+           focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500/80 backdrop-blur-xl transition-all shadow-sm;
   }
 
   .label {
-    @apply block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5;
+    @apply block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5;
   }
 
-  /* Neon Badges */
+  /* Clean Badges */
   .badge-green {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-400/15 text-emerald-300 border border-emerald-400/30 backdrop-blur-md;
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/80;
   }
 
   .badge-yellow {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-400/15 text-amber-300 border border-amber-400/30 backdrop-blur-md;
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200/80;
   }
 
   .badge-red {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-400/15 text-rose-300 border border-rose-400/30 backdrop-blur-md;
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200/80;
   }
 
   .badge-blue {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-cyan-400/15 text-cyan-300 border border-cyan-400/30 backdrop-blur-md;
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-sky-50 text-sky-700 border border-sky-200/80;
   }
 
   .badge-gray {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-white/10 text-slate-300 border border-white/20 backdrop-blur-md;
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 border border-slate-200;
   }
 
   .badge-purple {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-400/15 text-purple-300 border border-purple-400/30 backdrop-blur-md;
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-50 text-purple-700 border border-purple-200/80;
   }
 
   /* Glass Tables */
   .table-container {
-    @apply bg-white/[0.05] backdrop-blur-3xl border border-white/20 rounded-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.25)] overflow-hidden;
+    @apply bg-white/80 backdrop-blur-md border border-slate-200/80 rounded-2xl shadow-[0_8px_30px_rgba(15,23,42,0.05)] overflow-hidden transform-gpu;
   }
 
   .table-th {
-    @apply px-4 py-3.5 text-left text-xs font-bold text-slate-200 uppercase tracking-wider bg-white/[0.05] border-b border-white/15;
+    @apply px-4 py-3.5 text-left text-xs font-bold text-slate-600 uppercase tracking-wider bg-slate-50/70 border-b border-slate-200/80;
   }
 
   .table-td {
-    @apply px-4 py-3.5 text-sm text-slate-100 border-b border-white/10;
+    @apply px-4 py-3.5 text-sm text-slate-800 border-b border-slate-100;
   }
 
   .table-row {
-    @apply hover:bg-white/[0.08] transition-colors duration-150;
+    @apply hover:bg-slate-50/70 transition-colors duration-150;
   }
 }
 
@@ -117,7 +121,7 @@
     transform: translateY(0px) rotateX(0deg) rotateY(0deg);
   }
   50% {
-    transform: translateY(-12px) rotateX(2deg) rotateY(-2deg);
+    transform: translateY(-10px) rotateX(2deg) rotateY(-2deg);
   }
 }
 
@@ -126,21 +130,21 @@
     transform: translateY(0px) rotateX(0deg) rotateY(0deg);
   }
   50% {
-    transform: translateY(14px) rotateX(-2deg) rotateY(2deg);
+    transform: translateY(12px) rotateX(-2deg) rotateY(2deg);
   }
 }
 
 @keyframes laserPulse {
   0% {
     stroke-dashoffset: 200;
-    opacity: 0.2;
+    opacity: 0.3;
   }
   50% {
     opacity: 1;
   }
   100% {
     stroke-dashoffset: 0;
-    opacity: 0.3;
+    opacity: 0.4;
   }
 }
 

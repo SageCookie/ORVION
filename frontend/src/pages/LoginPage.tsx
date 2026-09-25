@@ -42,71 +42,73 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex bg-gray-900 text-white">
+    <div className="min-h-screen flex bg-[#f0f3f8] text-slate-800">
       {/* Left side hero */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-indigo-900 via-gray-900 to-black p-12 flex-col justify-between border-r border-white/10">
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-slate-100 via-sky-50/50 to-indigo-50/40 p-12 flex-col justify-between border-r border-slate-200/80">
         <div>
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center font-bold text-xl">O</div>
-            <span className="font-extrabold text-2xl tracking-wider">ORVION</span>
+            <div className="w-10 h-10 rounded-2xl overflow-hidden bg-white p-1.5 border border-slate-200 shadow-sm flex items-center justify-center">
+              <img src="/orvion-logo.png" alt="ORVION Logo" className="w-full h-full object-contain" />
+            </div>
+            <span className="font-extrabold text-2xl tracking-wider text-slate-900">ORVION</span>
           </div>
-          <div className="mt-2 text-indigo-300 font-medium">Intelligent Business Operations Platform</div>
+          <div className="mt-2 text-sky-700 font-semibold text-sm">Intelligent Business Operations Platform</div>
         </div>
 
         <div className="space-y-6">
-          <h1 className="text-4xl font-extrabold tracking-tight leading-tight">
-            End-to-End Enterprise Resource & Workflow Orchestration
+          <h1 className="text-4xl font-black tracking-tight leading-tight text-slate-900">
+            End-to-End Enterprise Resource &amp; Workflow Orchestration
           </h1>
-          <p className="text-gray-400 leading-relaxed text-lg">
+          <p className="text-slate-600 leading-relaxed text-base">
             Empower your team with strict 8-role RBAC, atomic quotation-to-order conversions, real-time inventory ledgers, and live financial analytics.
           </p>
 
           <div className="grid grid-cols-2 gap-4 pt-4">
-            <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-              <div className="text-2xl font-bold text-indigo-400">8 Roles</div>
-              <div className="text-sm text-gray-400">Strict RBAC Enforcement</div>
+            <div className="p-4 rounded-2xl bg-white/80 border border-slate-200 shadow-sm">
+              <div className="text-2xl font-black text-sky-700 font-mono">8 Roles</div>
+              <div className="text-xs text-slate-500 font-medium">Strict RBAC Enforcement</div>
             </div>
-            <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-              <div className="text-2xl font-bold text-green-400">100% Precision</div>
-              <div className="text-sm text-gray-400">BigDecimal Financial Math</div>
+            <div className="p-4 rounded-2xl bg-white/80 border border-slate-200 shadow-sm">
+              <div className="text-2xl font-black text-emerald-700 font-mono">100% Precision</div>
+              <div className="text-xs text-slate-500 font-medium">BigDecimal Financial Math</div>
             </div>
           </div>
         </div>
 
-        <div className="text-xs text-gray-500">
+        <div className="text-xs text-slate-500">
           © 2026 ORVION Systems. All rights reserved.
         </div>
       </div>
 
       {/* Right side form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-gray-950">
-        <div className="w-full max-w-md space-y-8">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-[#f0f3f8]">
+        <div className="w-full max-w-md space-y-8 glass-panel p-8 border border-slate-200/90 shadow-xl bg-white/90 rounded-3xl">
           <div>
-            <h2 className="text-3xl font-bold text-white tracking-tight">Sign in to ORVION</h2>
-            <p className="text-gray-400 text-sm mt-1">Enter your credentials or pick a demo role account below</p>
+            <h2 className="text-3xl font-black text-slate-900 tracking-tight">Sign in to ORVION</h2>
+            <p className="text-slate-500 text-sm mt-1">Enter your credentials or pick a demo role account below</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">Email Address</label>
+              <label className="label">Email Address</label>
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="input"
                 placeholder="name@company.com"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">Password</label>
+              <label className="label">Password</label>
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="input"
                 placeholder="••••••••"
               />
             </div>
@@ -114,17 +116,17 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 px-4 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2"
+              className="w-full py-3.5 px-4 bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white font-bold rounded-xl transition shadow-md flex items-center justify-center gap-2 text-sm"
             >
               <LogIn className="w-4 h-4" />
-              {loading ? 'Authenticating...' : 'Sign In'}
+              {loading ? 'Authenticating...' : 'Sign In to Platform'}
             </button>
           </form>
 
           {/* Quick Demo Pre-seed Switcher */}
-          <div className="pt-6 border-t border-gray-800">
-            <div className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3 flex items-center gap-2">
-              <ShieldAlert className="w-3.5 h-3.5 text-indigo-400" />
+          <div className="pt-6 border-t border-slate-200">
+            <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-3 flex items-center gap-2">
+              <ShieldAlert className="w-3.5 h-3.5 text-sky-600" />
               Quick Demo Accounts (Password: Password123!)
             </div>
             <div className="grid grid-cols-2 gap-2">
@@ -133,14 +135,14 @@ export default function LoginPage() {
                   key={acc.email}
                   type="button"
                   onClick={() => selectDemoAccount(acc.email)}
-                  className={`text-left px-3 py-2 rounded-lg text-xs font-medium border transition-all ${
+                  className={`text-left px-3 py-2 rounded-xl text-xs font-medium border transition-all ${
                     email === acc.email
-                      ? 'bg-indigo-600/20 border-indigo-500 text-indigo-300'
-                      : 'bg-gray-900 border-gray-800 text-gray-400 hover:bg-gray-800 hover:text-white'
+                      ? 'bg-sky-50 border-sky-300 text-sky-700 shadow-sm'
+                      : 'bg-slate-50/80 border-slate-200 text-slate-700 hover:bg-slate-100 hover:text-slate-900'
                   }`}
                 >
-                  <div className="font-semibold text-gray-200">{acc.label}</div>
-                  <div className="text-[10px] text-gray-500 truncate">{acc.email}</div>
+                  <div className="font-bold text-slate-900 truncate">{acc.label}</div>
+                  <div className="text-[10px] text-slate-500 truncate">{acc.email}</div>
                 </button>
               ))}
             </div>
