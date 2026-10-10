@@ -1,0 +1,71 @@
+databases:
+  - name: orvion-db
+    plan: free
+    databaseName: orvion_db
+    user: orvion_user
+    postgresMajorVersion: "15"
+
+services:
+  # ── Backend (Spring Boot via Dockerfile) ──────────────────────
+  - type: web
+    name: orvion-backend
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    branch: main
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: postgres
+      - key: DB_HOST
+        fromDatabase:
+          name: orvion-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: orvion-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: orvion-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: orvion-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: orvion-db
+          property: password
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRATION_MS
+        value: "86400000"
+      - key: STORAGE_LOCATION
+        value: /app/uploads
+
+  # ── Frontend (React static site via Vite build) ──────────────
+  - type: web
+    name: orvion-frontend
+    runtime: static
+    plan: free
+    buildCommand: cd frontend && npm ci && npm run build
+    staticPublishPath: frontend/dist
+    branch: main
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: SAMEORIGIN
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_BASE_URL
+        fromService:
+          type: web
+          name: orvion-backend
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: NODE_VERSION
+        value: "20"
